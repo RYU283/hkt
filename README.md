@@ -85,7 +85,8 @@ npm run dev
 ```
 
 ### 5. Chrome 확자 프로그램 로드
-```bash1.  Chrome 브라우저에서 `chrome://extensions` 주소로 이동합니다.
+```bash  
+1.  Chrome 브라우저에서 `chrome://extensions` 주소로 이동합니다.
 2.  오른쪽 상단의 **'개발자 모드(Developer mode)'**를 활성화합니다.
 3.  왼쪽 상단의 **'압축해제된 확장 프로그램을 로드합니다.(Load unpacked)'** 버튼을 클릭합니다.
 4.  파일 탐색기가 열리면, 이 프로젝트 폴더 안에 있는 **`Chrome-Extension` 폴더를 선택**하고 '열기'를 누릅니다.
