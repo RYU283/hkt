@@ -1,7 +1,6 @@
 <!-- src/routes/admin/+page.svelte -->
 
 <script>
-	// +page.server.js의 load 함수가 반환한 데이터가 'data'라는 이름으로 자동으로 전달됩니다.
 	export let data;
 </script>
 
