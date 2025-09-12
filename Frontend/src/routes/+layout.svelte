@@ -1,4 +1,3 @@
-<!-- src/routes/+layout.svelte (하단 바 축소 및 스크롤 방지 최종본) -->
 
 <script>
 	import { goto } from '$app/navigation';

@@ -1,0 +1,11 @@
+{
+	"/": [],
+	"/admin": [
+		"src/routes/admin/+page.server.js"
+	],
+	"/api/chat": [
+		"src/routes/api/chat/+server.js"
+	],
+	"/order": [],
+	"/payment": []
+}
