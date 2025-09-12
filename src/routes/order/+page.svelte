@@ -28,7 +28,6 @@
 		{ id: 13, categoryId: 'korea', name: '물냉면', price: 9000, image: '🍜' },
 		{ id: 14, categoryId: 'korea', name: '보쌈', price: 32000, image: '🥬' },
 		{ id: 15, categoryId: 'korea', name: '닭갈비', price: 25000, image: '🍳' },
-		{ id: 16, categoryId: 'korea', name: '감자전', price: 10000, image: '🥔' },
 		// --- 일식 (16개) ---
 		{ id: 17, categoryId: 'japan', name: '초밥 세트', price: 15000, image: '🍣' },
 		{ id: 18, categoryId: 'japan', name: '돈코츠 라멘', price: 9500, image: '🍜' },
@@ -39,9 +38,6 @@
 		{ id: 26, categoryId: 'japan', name: '타코야끼', price: 7000, image: '🐙' },
 		{ id: 27, categoryId: 'japan', name: '야키토리', price: 16000, image: '🍢' },
 		{ id: 28, categoryId: 'japan', name: '규동', price: 9500, image: '🐮' },
-		{ id: 29, categoryId: 'japan', name: '미소라멘', price: 9000, image: '🍜' },
-		{ id: 30, categoryId: 'japan', name: '텐동', price: 11000, image: '🍚' },
-		{ id: 32, categoryId: 'japan', name: '카레라이스', price: 8500, image: '🍛' },
 		// --- 중식 (16개) ---
 		{ id: 33, categoryId: 'china', name: '짜장면', price: 7000, image: '🍝' },
 		{ id: 34, categoryId: 'china', name: '짬뽕', price: 8000, image: '🍜' },
@@ -58,7 +54,6 @@
 		{ id: 45, categoryId: 'china', name: '칠리새우', price: 24000, image: '🍤' },
 		{ id: 46, categoryId: 'china', name: '멘보샤', price: 15000, image: '🍞' },
 		{ id: 47, categoryId: 'china', name: '마라탕', price: 12000, image: '🌶️' },
-		{ id: 48, categoryId: 'china', name: '딤섬', price: 8000, image: '🥟' },
 		// --- 양식 (16개) ---
 		{ id: 49, categoryId: 'western', name: '토마토 파스타', price: 12000, image: '🍝' },
 		{ id: 50, categoryId: 'western', name: '크림 리조또', price: 13000, image: '🍚' },
