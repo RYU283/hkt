@@ -2,7 +2,7 @@
 
 > **"가장 편안한 주문은, 말이 통하는 주문입니다."**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Now-blue?style=for-the-badge&logo=vercel)](https://hkt-rho.vercel.app)
+[![바로 방문해보세요](https://img.shields.io/badge/Live_Demo-Visit_Now-blue?style=for-the-badge&logo=vercel)](https://hkt-rho.vercel.app)
 
 ##  개발 동기 (Motivation)
 
