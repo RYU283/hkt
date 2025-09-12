@@ -84,7 +84,7 @@ OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
 npm run dev
 ```
 
-### 5. Chrome 확자 프로그램 로드
+### 5. Chrome 확장 프로그램 적용
 ```bash  
 1.  Chrome 브라우저에서 `chrome://extensions` 주소로 이동합니다.
 2.  오른쪽 상단의 '개발자 모드(Developer mode)'를 활성화합니다.
