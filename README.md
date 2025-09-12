@@ -29,6 +29,7 @@
 -   **실시간 장바구니**: 메뉴 추가/변경 시 주문 내역과 총금액이 즉시 업데이트되며, 목록이 길어져도 스크롤을 통해 확인할 수 있습니다.
 -   **지능형 음성 주문 (GPT-4o)**:
     -   단순 음성 텍스트 변환을 넘어, "김치찌개 하나랑 불고기 덮밥 두 개 담아줘"와 같은 자연어의 맥락을 이해하고 장바구니에 정확히 반영합니다.
+-   **자체 제작 Chrome 확장 프로그램**: JavaScript로 직접 개발하여, 텍스트 기반의 AI 음성 주문 인터페이스를 제공합니다.
 -   **포인트 적립**: 터치에 최적화된 키패드를 통해 휴대폰 번호를 입력하고, 결제 금액의 1%를 적립할 수 있습니다.
 -   **단계별 결제 프로세스**: 주문 확인, 포인트 적립, 결제 수단 선택, 결제 진행, 결과 안내 등 명확한 단계로 결제 과정을 안내합니다.
 
@@ -44,6 +45,7 @@
 | 구분          | 사용 기술                                                                                                                              | 설명                                                                                                |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | **프론트엔드**  | ![SvelteKit](https://img.shields.io/badge/SvelteKit-FF3E00?logo=svelte&logoColor=fff)                                                  | 컴파일러 기반의 빠른 성능과 직관적인 문법을 통해 사용자 인터페이스를 구축했습니다.                  |
+| **클라이언트 확장** | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) | 음성주문 AI UI를 구현하기 위해 JavaScript로 Chrome 확장 프로그램을 개발했습니다. |
 | **백엔드 & DB** | ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=fff)                                                  | PostgreSQL 기반의 DB, 실시간 데이터 동기화, DB 함수를 통해 주문 및 포인트 시스템을 구현했습니다.    |
 | **AI (음성)** | ![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white) **GPT-4o**                                            | Web Speech API로 수집된 음성 텍스트를 GPT-4o에 전달하여 사용자의 주문 의도를 정확하게 파악했습니다. |
 | **배포**        | ![Vercel](https://img.shields.io/badge/Vercel-000?logo=vercel&logoColor=fff)                                                           | GitHub 연동을 통해 손쉬운 유지보스 시스템을 구축하고, 빠르고 안정적인 배포 환경을 확보했습니다.          |
@@ -80,5 +82,13 @@ OPENAI_API_KEY="YOUR_OPENAI_API_KEY"
 ### 4. 개발 서버 실행
 ```bash
 npm run dev
+```
+
+### 5. Chrome 확자 프로그램 로드
+```bash1.  Chrome 브라우저에서 `chrome://extensions` 주소로 이동합니다.
+2.  오른쪽 상단의 **'개발자 모드(Developer mode)'**를 활성화합니다.
+3.  왼쪽 상단의 **'압축해제된 확장 프로그램을 로드합니다.(Load unpacked)'** 버튼을 클릭합니다.
+4.  파일 탐색기가 열리면, 이 프로젝트 폴더 안에 있는 **`Chrome-Extension` 폴더를 선택**하고 '열기'를 누릅니다.
+
 ```
 이제 브라우저에서 http://localhost:5173 으로 접속하여 키오스크를, http://localhost:5173/admin 으로 관리자 페이지를 확인할 수 있습니다.
