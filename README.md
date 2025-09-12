@@ -28,7 +28,7 @@
 -   **직관적인 메뉴 탐색**: 가로형 와이드스크린에 최적화된 화면 구성과 카테고리별 메뉴를 제공합니다.
 -   **실시간 장바구니**: 메뉴 추가/변경 시 주문 내역과 총금액이 즉시 업데이트되며, 목록이 길어져도 스크롤을 통해 확인할 수 있습니다.
 -   **지능형 음성 주문 (GPT-4o)**:
-    -   단순 음성 텍스트 변환을 넘어, "김치찌개 하나랑 불고기 덮밥 두 개 담아줘"와 같은 자연어의 맥락을 이해하고 장바구니에 정확히 반영합니다.
+    -   단순 음성 텍스트 변환을 넘어, 자연어의 맥락을 정확히 이해하고 장바구니에 정확히 반영합니다.
 -   **자체 제작 Chrome 확장 프로그램**: JavaScript로 직접 개발하여, AI 음성 주문 인터페이스를 제공합니다.
 -   **포인트 적립**: 터치에 최적화된 키패드를 통해 휴대폰 번호를 입력하고, 결제 금액의 1%를 적립할 수 있습니다.
 -   **단계별 결제 프로세스**: 주문 확인, 포인트 적립, 결제 수단 선택, 결제 진행, 결과 안내 등 명확한 단계로 결제 과정을 안내합니다.
@@ -45,7 +45,7 @@
 | 구분          | 사용 기술                                                                                                                              | 설명                                                                                                |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | **프론트엔드**  | ![SvelteKit](https://img.shields.io/badge/SvelteKit-FF3E00?logo=svelte&logoColor=fff)                                                  | 컴파일러 기반의 빠른 성능과 직관적인 문법을 통해 사용자 인터페이스를 구축했습니다.                  |
-| **클라이언트 확장** | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) | 음성주문 AI UI를 구현하기 위해 JavaScript로 Chrome 확장 프로그램을 개발했습니다. |
+| **클라이언트 확장** | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) | 음성주문 AI 인터페이스를 구현하기 위해 JavaScript로 Chrome 확장 프로그램을 개발했습니다. |
 | **백엔드 & DB** | ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=fff)                                                  | PostgreSQL 기반의 DB, 실시간 데이터 동기화, DB 함수를 통해 주문 및 포인트 시스템을 구현했습니다.    |
 | **AI (음성)** | ![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white) **GPT-4o**                                            | Web Speech API로 수집된 음성 텍스트를 GPT-4o에 전달하여 사용자의 주문 의도를 정확하게 파악했습니다. |
 | **배포**        | ![Vercel](https://img.shields.io/badge/Vercel-000?logo=vercel&logoColor=fff)                                                           | GitHub 연동을 통해 손쉬운 유지보스 시스템을 구축하고, 빠르고 안정적인 배포 환경을 확보했습니다.          |
