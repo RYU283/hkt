@@ -1,26 +1,30 @@
+<!-- src/routes/+page.svelte (TTS 접근성 기능 통합 최종본) -->
 
 <script>
 	import { goto } from '$app/navigation';
-	import { aiEnabled, toggleAiEnabled, finalText } from '$lib/voiceAssistant.js';
+	import { onMount, onDestroy } from 'svelte';
+    
+
+	import { aiEnabled, toggleAiEnabled, finalText, startListening } from '$lib/voiceAssistant.js';
 	import { parseHomeIntent } from '$lib/intentKorean.js';
-	import { onMount } from 'svelte';
 	import { playButtonSound } from '$lib/buttonSound.js';
-	let isAiEnabled = false;
+	
+    let isAiEnabled = false; // UI 표시를 위한 지역 변수
+
 	onMount(() => {
+        // localStorage에서 AI 활성화 상태를 불러옵니다.
 		const stored = localStorage.getItem('aiEnabled');
 		if (stored) {
 			aiEnabled.set(stored === 'true');
 		}
-		const unsub = aiEnabled.subscribe((v) => {
+        // 스토어의 변경사항을 지역 변수와 localStorage에 동기화합니다.
+		const unsubAi = aiEnabled.subscribe((v) => {
 			isAiEnabled = v;
 			localStorage.setItem('aiEnabled', String(v));
 		});
-		return () => unsub();
-	});
-	function toggleAiFeature() { playButtonSound(); toggleAiEnabled(); }
-	function handleSelection(type) { playButtonSound(); goto('/order'); }
-	onMount(() => {
-		const unsub = finalText.subscribe((t) => {
+
+        // 음성 명령을 구독하여 처리합니다.
+		const unsubText = finalText.subscribe((t) => {
 			if (!t || !isAiEnabled) return;
 			const intent = parseHomeIntent(t);
 			if (intent?.type === 'NAVIGATE_ORDER') {
@@ -28,9 +32,60 @@
 				finalText.set('');
 			}
 		});
-		return () => unsub();
+
+		return () => { // 컴포넌트가 사라질 때 모든 구독을 해제합니다.
+            unsubAi();
+            unsubText();
+        };
 	});
+
+	function toggleAiFeature() { playButtonSound(); toggleAiEnabled(); }
+	function handleSelection(type) { playButtonSound(); goto('/order'); }
+
+
+
+    let accessibilityInterval;
+
+    function speak(text) {
+        if (typeof window === 'undefined' || !window.speechSynthesis || speechSynthesis.speaking) return;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        speechSynthesis.speak(utterance);
+    }
+
+    function activateAccessibilityMode() {
+        clearInterval(accessibilityInterval); // 5초 안내 중지
+        aiEnabled.set(true); // AI 스토어 상태를 true로 변경
+        speak("지금부터 모든 주문은 음성으로 가능합니다. 주문하시려면 매장 혹은 포장 주문하실지 말씀해주세요.");
+        startListening(); // 즉시 음성 인식 시작
+    }
+
+    onMount(() => {
+        // 5초마다 접근성 안내 음성을 재생합니다.
+        accessibilityInterval = setInterval(() => {
+            // AI 기능이 비활성화 상태일 때만 안내합니다.
+            if (!isAiEnabled) {
+                speak("시각장애인이시면 화면 오른쪽 끝을 두번 클릭해주세요.");
+            }
+        }, 5000);
+    });
+
+    onDestroy(() => {
+        // 페이지를 떠날 때 인터벌과 TTS를 정리합니다.
+        if (accessibilityInterval) clearInterval(accessibilityInterval);
+        if (typeof window !== 'undefined' && window.speechSynthesis) {
+            speechSynthesis.cancel();
+        }
+    });
+
 </script>
+
+<div 
+    class="accessibility-trigger"
+    on:dblclick={activateAccessibilityMode}
+    aria-label="시각장애인용 AI 도우미 활성화 영역"
+    role="button"
+></div>
 
 <div class="page-layout">
 	<header class="kiosk-header">
@@ -74,75 +129,56 @@
 	</main>
 </div>
 
+
 <style>
+    .accessibility-trigger {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 15%;
+        height: 100%;
+        z-index: 999;
+    }
 	.page-layout {
-		width: 100%;
-		max-width: 1400px; /* 최대 너비 제한 */
-		margin: 0 auto; /* 중앙 정렬 */
-		padding: 4rem 4rem 2rem 4rem;
-		box-sizing: border-box;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
+		width: 100%; max-width: 1400px; margin: 0 auto; padding: 4rem 4rem 2rem 4rem; box-sizing: border-box; height: 100%; display: flex; flex-direction: column;
 	}
 	.kiosk-header {
-		display: flex; align-items: center; gap: 0.75rem;
-		flex-shrink: 0; font-weight: 600; font-size: 1.25rem; color: #495057;
+		display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; font-weight: 600; font-size: 1.25rem; color: #495057;
 	}
 	.kiosk-content {
-		flex: 1; display: flex; flex-direction: column;
-		justify-content: center; /* 콘텐츠를 수직 중앙에 배치 */
+		flex: 1; display: flex; flex-direction: column; justify-content: center;
 	}
 	.welcome-text h1 {
-		font-size: 4rem; font-weight: 700; color: #212529;
-		line-height: 1.3; margin-bottom: 3rem;
+		font-size: 4rem; font-weight: 700; color: #212529; line-height: 1.3; margin-bottom: 3rem;
 	}
 	.button-grid {
-		display: grid;
-		/* 2개의 메인 버튼과 1개의 보조 버튼 레이아웃 */
-		grid-template-columns: 1fr 1fr;
-		gap: 1.5rem;
+		display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
 	}
 	.grid-button {
-		border-radius: 20px;
-		padding: 2rem;
-		display: flex; justify-content: space-between; align-items: center;
-		cursor: pointer;
-		transition: all 0.2s ease-out;
+		border-radius: 20px; padding: 2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s ease-out;
 	}
 	.grid-button:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+		transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 	}
 	.grid-button.primary {
 		background-color: #1c7ed6; color: white; border: none;
 	}
 	.grid-button.secondary {
-		background-color: #ffffff; color: #343a40; border: 1px solid #e9ecef;
-		grid-column: 1 / -1; /* 가로 전체를 차지 */
+		background-color: #ffffff; color: #343a40; border: 1px solid #e9ecef; grid-column: 1 / -1;
 	}
-
 	.button-text { display: flex; flex-direction: column; }
 	.main-text { font-size: 2rem; font-weight: 700; }
 	.sub-text { font-size: 1.1rem; font-weight: 400; opacity: 0.8; }
-	
 	.button-icon { opacity: 0.8; }
 	.button-icon svg { width: 48px; height: 48px; }
-
 	.ai-toggle-container .main-text { font-size: 1.5rem; }
 	.ai-toggle-container .sub-text { font-size: 1rem; }
-
 	.toggle-switch {
-		width: 60px; height: 32px; background-color: #dee2e6;
-		border-radius: 16px; position: relative;
-		transition: background-color 0.2s ease-in-out;
+		width: 60px; height: 32px; background-color: #dee2e6; border-radius: 16px; position: relative; transition: background-color 0.2s ease-in-out;
 	}
 	.toggle-switch.active { background-color: #1c7ed6; }
 	.toggle-handle {
-		width: 26px; height: 26px; background-color: white; border-radius: 50%;
-		position: absolute; top: 3px; left: 3px;
-		transition: transform 0.2s ease-in-out;
-		box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+		width: 26px; height: 26px; background-color: white; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: transform 0.2s ease-in-out; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 	}
 	.toggle-switch.active .toggle-handle { transform: translateX(28px); }
 </style>
