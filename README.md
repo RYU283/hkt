@@ -68,8 +68,8 @@
 
 ### 1. 프로젝트 클론
 ```bash
-git clone https://github.com/RYU283/hkt.git
-cd hkt.git
+git clone https://github.com/RYU283/hkt
+cd hkt
 ```
 
 ### 2. 의존성 설치
